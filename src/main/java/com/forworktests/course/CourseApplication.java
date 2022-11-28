@@ -1,4 +1,4 @@
-package com.forworktests.course;
+ package com.forworktests.course;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
