@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    // UserRepository repository;
+    // repositories.UserRepository repository;
 
     @Override
     public void add(User user) {
