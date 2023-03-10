@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -20,6 +20,7 @@ public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@EqualsAndHashCode.Include
 	private Long id;
 	private String name;
 	private String email;
@@ -30,15 +31,15 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 
-	//public User(){
-	//}
+	/*public User(){
+	}
 
-	//public User(Long id, String name, String email, String phone, String password) {
-		//this.id = id;
-		//this.name = name;
-		//this.email = email;
-		//this.phone = phone;
-		//this.password = password;
-	//}
+	public User(Long id, String name, String email, String phone, String password) {
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.password = password;
+	}*/
 
 	}
