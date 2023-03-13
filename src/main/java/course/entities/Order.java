@@ -9,6 +9,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -32,6 +35,9 @@ public class Order implements Serializable {
     @JoinColumn(name = "client_id")
     private User client;
 
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
+
     public Order(Long id, Instant moment, @NotNull OrderStatus orderStatus, User client) {
         this.id = id;
         this.moment = moment;
@@ -45,5 +51,9 @@ public class Order implements Serializable {
 
     public void setOrderStatus(@NotNull OrderStatus orderStatus) {
         this.orderStatus = orderStatus.getCode();
+    }
+
+    public Set<OrderItem> getItems(){
+        return items;
     }
 }
