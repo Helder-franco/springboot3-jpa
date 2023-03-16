@@ -1,7 +1,9 @@
 package course.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonView;
 import course.entities.enums.OrderStatus;
+import course.views.Views;
 import jakarta.persistence.*;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +14,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+@JsonView({Views.Order.class})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,15 +32,19 @@ public class Order implements Serializable {
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
 
+
     private Integer orderStatus;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
 
+
     @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> items = new HashSet<>();
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL )
     private Payment payment;
     public Order(Long id, Instant moment, @NotNull OrderStatus orderStatus, User client) {
         this.id = id;
@@ -56,5 +63,21 @@ public class Order implements Serializable {
 
     public Set<OrderItem> getItems(){
         return items;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
+    public Double getTotal(){
+        double sum = 0.0;
+        for(OrderItem x : items){
+            sum += x.getSubTotal();
+        }
+        return sum;
     }
 }

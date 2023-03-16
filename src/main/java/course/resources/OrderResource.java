@@ -1,7 +1,9 @@
 package course.resources;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import course.entities.Order;
 import course.services.OrderService;
+import course.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +26,7 @@ public class OrderResource {
 		List<Order> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
-
+	@JsonView({Views.Order.class})
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Order> findById(@PathVariable Long id) {
 		Order obj = service.findById(id);

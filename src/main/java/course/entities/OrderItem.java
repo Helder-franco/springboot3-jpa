@@ -1,7 +1,9 @@
 package course.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import course.entities.pk.OrderItemPK;
+import course.views.Views;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -9,6 +11,7 @@ import lombok.*;
 
 import java.io.Serializable;
 
+@JsonView({Views.Order.class})
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @Getter
@@ -28,7 +31,6 @@ public class OrderItem implements Serializable {
     private Double price;
 
     public OrderItem(Order order, Product product, Integer quantity, Double price) {
-        super();
         id.setOrder(order);
         id.setProduct(product);
         this.quantity = quantity;
@@ -44,13 +46,16 @@ public class OrderItem implements Serializable {
         id.setOrder(order);
     }
 
-
     public Product getProduct(){
         return id.getProduct();
     }
 
     public void setProduct(Product product){
         id.setProduct(product);
+    }
+
+    public Double getSubTotal(){
+        return price * quantity;
     }
 
 }

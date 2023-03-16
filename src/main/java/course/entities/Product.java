@@ -1,12 +1,15 @@
 package course.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+import course.views.Views;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
 
 @NoArgsConstructor
 @Getter
@@ -17,13 +20,18 @@ import java.util.Set;
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @JsonView({Views.Order.class})
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
+    @JsonView({Views.Order.class})
     private String name;
+    @JsonView({Views.Order.class})
     private String description;
+    @JsonView({Views.Order.class})
     private Double price;
+    @JsonView({Views.Order.class})
     private String imgUrl;
 
     @ManyToMany
