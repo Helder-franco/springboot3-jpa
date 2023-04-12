@@ -1,4 +1,4 @@
-package course.services.exceptions;
+package course.resources.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
